@@ -22,7 +22,7 @@ Tips
 - `chmod 755 -where-you-placed-this-script-` and `ln -s -where-you-placed-this-script- /usr/bin/loadsnap`
 
 
-Licence: Beerware
+Licence
 -------------------------------------
 If you use it, feel free to buy me a beer when you see me. If you feel like it. If you don't, then don't :D
 
