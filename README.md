@@ -13,8 +13,9 @@ Requirements, but works without them too
 -  [sysstat](http://sebastien.godard.pagesperso-orange.fr/)
 -  [bwm-ng](http://www.gropp.org/?id=projects&sub=bwm-ng)
 
-Just run it, no arguments required (or possible), and by default reports are saved to
-/var/log/loadsnap/$timestamp
+Usage
+-------------------------------------
+Just run it, no arguments required (or possible), and by default reports are saved to /var/log/loadsnap/$timestamp
 
 Tips:
 -------------------------------------
