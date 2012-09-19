@@ -2,7 +2,7 @@ loadsnap
 ========
 A simple script to generate server load snapshot for later investigation
 
-== Requirements but works without them too
+* Requirements but works without them too
 - sysstat
 - bwm-ng
 
