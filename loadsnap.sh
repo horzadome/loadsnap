@@ -8,8 +8,9 @@
 #
 # version	: v.0.1 - 2012-09-19 Davor Grubisa : written the script
 
+
 # These parameters will be externalized to config file one day
-# User configuration starts
+# User configuration START
 logdir='/var/log/loadsnap'
 
 
