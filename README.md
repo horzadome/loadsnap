@@ -1,6 +1,9 @@
 loadsnap
 ========
 A simple script to generate server load snapshot for later investigation
+Idea is simple - I want my clients to make a server status report before killing processes, restarting Apache and doing similar things.
+It has to be simple. I want them just to type "loadsnap" and that's it.
+Any contributions are welcome. If you don't want to fork it, feel free to email any changes or ideas to forwardalias at gmail dot com
 
 **Requirements but works without them too:**
 -  sysstat
