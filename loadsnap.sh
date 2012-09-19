@@ -8,8 +8,14 @@
 #
 # version	: v.0.1 - 2012-09-19 Davor Grubisa : written the script
 
-nowstamp=$(date +%Z-%Y-%m-%d-%T)
+# These parameters will be externalized to config file one day
+# User configuration starts
 logdir='/var/log/loadsnap'
+
+
+# User configuration ENDs here. Proceed, but beware of dragons
+
+nowstamp=$(date +%Z-%Y-%m-%d-%T)
 logfile=$logdir'/'$nowstamp
 mkdir -p -m 700 $logdir
 touch $logfile
