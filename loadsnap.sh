@@ -7,55 +7,64 @@
 # usage		: just run it, no arguments required
 #
 # version	: v.0.1 - 2012-09-19 Davor Grubisa : written the script
+#			: v.0.2 - 2012-09-20 Davor Grubisa : externalized configuration
+#				added templating support , added distro-specific configuration
 
-
-# These parameters will be externalized to config file one day
-# User configuration START
-logdir='/var/log/loadsnap'
-
-
-# User configuration ENDs here. Proceed, but beware of dragons
+# loadsnap.conf - modify paths and commands
+# template.conf - modify header templates
 
 nowstamp=$(date +%Z-%Y-%m-%d-%T)
-logfile=$logdir'/'$nowstamp
-mkdir -p -m 700 $logdir
+
+# Check where the script actually resides
+source="${BASH_SOURCE[0]}"
+dir="$( dirname "$source" )"
+while [ -h "$source" ]
+do
+  source="$(readlink "$source")"
+  [[ $source != /* ]] && source="$dir/$source"
+  dir="$( cd -P "$( dirname "$source"  )" && pwd )"
+done
+dir="$( cd -P "$( dirname "$source" )" && pwd )"
+basedir=$dir
+
+. $basedir/loadsnap.conf
+. $basedir/template.conf
+
+logfile=$reportdir'/'$nowstamp
+mkdir -p -m 700 $reportdir
 touch $logfile
 
-(
-  echo "==========================================="
-  echo "Server load from" `hostname -f`
-  echo "Taken on " $nowstamp
-  echo "==========================================="
-) 2>&1 |tee -a $logfile
+case $os in
+custom)
+  freemem=$custommem
+  bandwidth=$custombw
+  dagstat=$customdstat
+  apach=$customa2ctl
+  mysqlsatt=$custommysqladmin
+  sarcommand=$customsar
+  ;;
+*)
+  echo -e "Wrong OS choice. \nPlease check $basedir/loadsnap.conf and select one of the choices there"
+  exit 2
+  ;;
+esac
 
-(
-  echo ""
-  echo "==========================================="
-  echo "           Memory usage (MB)"
-  echo "==========================================="
-  free -m
-) 2>&1>> $logfile
+# HEADER START
+  (
+    $separator
+    $header
+    $separator
+  )2>&1 |tee -a $logfile
+# HEADER END
 
-(
-  echo ""
-  echo "==========================================="
-  echo "              Network (approx numbers)"
-  echo "==========================================="
-  echo "Total conn: " `netstat -nap |wc -l`
-  echo "HTTP conn : " `netstat -nap |grep :80 |wc -l`
-  echo "MySQL conn: " `netstat -nap |grep :3306 |wc -l`
-  echo "Bandwidth :"
-  bwm-ng -o plain -c 1 -t 3000
-) 2>&1>> $logfile
+# MODULES START
+  (. $moddir/memory.sh ) 2>&1>> $logfile
+# (. $moddir/network.sh) 2>&1>> $logfile
+  (. $moddir/cpu.sh) 2>&1>> $logfile
+#  (. $moddir/disk.sh) 2>&1>> $logfile
 
-(
-  echo ""
-  echo "==========================================="
-  echo "           CPU load ( last 10 intervals)"
-  echo "==========================================="
-  sar -q |tail -n 10
-) 2>&1>> $logfile
-
+# MODULES END
+exit 0
 (
   echo ""
   echo "==========================================="
@@ -105,4 +114,4 @@ touch $logfile
   echo "==========================================="
 ) 2>&1 |tee -a $logfile
 
-exit 0
+exit $?
