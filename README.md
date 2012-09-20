@@ -10,17 +10,20 @@ Any contributions are welcome. If you don't want to fork it, feel free to email 
 
 Requirements, but works without them too
 -------------------------------------
--  [sysstat](http://sebastien.godard.pagesperso-orange.fr/)
--  [bwm-ng](http://www.gropp.org/?id=projects&sub=bwm-ng)
+- [sysstat](http://sebastien.godard.pagesperso-orange.fr/)
+- [bwm-ng](http://www.gropp.org/?id=projects&sub=bwm-ng)
+- [dstat](http://dag.wieers.com/home-made/dstat/)
 
 Usage
 -------------------------------------
-Just run it, no arguments required (or possible), and by default reports are saved to /var/log/loadsnap/$timestamp
+Just run loadstat.sh, no arguments required (or possible), and by default reports are saved to $basedir/reports/$timestamp
 
 Tips
 -------------------------------------
 - `chmod 755 -where-you-placed-this-script-` and `ln -s -where-you-placed-this-script- /usr/bin/loadsnap`
-
+- modify loadsnap.conf to match your platform
+- report headers can be modified in template.conf
+- feel free to modify modules in "modules" directory
 
 Licence
 -------------------------------------
