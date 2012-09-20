@@ -1,8 +1,10 @@
 $separator
-echo "              Network (approx numbers - output not filtered properly)"
+echo -e "\t\tNetwork (listen included)"
 $separator
-echo "Total connections : " `netstat -nap |wc -l`
-echo "HTTP connections : " `netstat -nap |grep :80 |wc -l`
-echo "MySQL connections : " `netstat -nap |grep :3306 |wc -l`
-echo -e "Bandwidth :"
+echo -e "Total connections\t: " `netstat -pntu |wc -l`
+echo -e "HTTP connections\t: " `netstat -pntu |grep :$httpport |wc -l`
+echo -e "MySQL connections\t: " `netstat -pntu |grep :$mysqlport |wc -l`
+echo -e "SSH connections\t\t: " `netstat -pntu |grep :$sshport |wc -l`
+echo -e "FTP connections\t\t: " `netstat -pntu |grep :$ftpport |wc -l`
+echo -e "Bandwidth\t\t:"
 $bandwidth

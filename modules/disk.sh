@@ -1,4 +1,4 @@
 $separator
-echo "           Disk IO (5s interval)"
+echo -e "\t\t\t Disk IO (5s interval)"
 $separator
-$dagstat
+echo "$dagstat"

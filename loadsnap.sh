@@ -28,11 +28,12 @@ dir="$( cd -P "$( dirname "$source" )" && pwd )"
 basedir=$dir
 
 . $basedir/loadsnap.conf
-. $basedir/template.conf
 
 logfile=$reportdir'/'$nowstamp
 mkdir -p -m 700 $reportdir
 touch $logfile
+
+. $basedir/template.conf
 
 case $os in
 custom)
@@ -40,8 +41,10 @@ custom)
   bandwidth=$custombw
   dagstat=$customdstat
   apach=$customa2ctl
-  mysqlsatt=$custommysqladmin
+  mysqlstat=$custommysqladmin
   sarcommand=$customsar
+  topproc=$customtop
+  proclist=$customproc
   ;;
 *)
   echo -e "Wrong OS choice. \nPlease check $basedir/loadsnap.conf and select one of the choices there"
@@ -50,68 +53,24 @@ custom)
 esac
 
 # HEADER START
-  (
-    $separator
-    $header
-    $separator
-  )2>&1 |tee -a $logfile
+$separator 2>&1>> $logfile
+$header 2>&1 |tee -a $logfile
+$separator 2>&1>> $logfile
 # HEADER END
 
 # MODULES START
-  (. $moddir/memory.sh ) 2>&1>> $logfile
-# (. $moddir/network.sh) 2>&1>> $logfile
-  (. $moddir/cpu.sh) 2>&1>> $logfile
-#  (. $moddir/disk.sh) 2>&1>> $logfile
-
+(. $moddir/memcpu.sh ) 2>&1>> $logfile
+(. $moddir/network.sh) 2>&1>> $logfile
+(. $moddir/disk.sh) 2>&1>> $logfile
+(. $moddir/process.sh) 2>&1>> $logfile
+(. $moddir/apache.sh) 2>&1>> $logfile
+(. $moddir/mysql.sh) 2>&1>> $logfile
 # MODULES END
+
+# FOOTER START
+$separator 2>&1>> $logfile
+$footer 2>&1 |tee -a $logfile
+$separator 2>&1>> $logfile
+# FOOTER END
+
 exit 0
-(
-  echo ""
-  echo "==========================================="
-  echo "           Disk IO (5s interval)"
-  echo "==========================================="
-  dstat --noupdate -a 5 1
-) 2>&1>> $logfile
-
-
-(
-  echo ""
-  echo "==========================================="
-  echo "           Top output"
-  echo "==========================================="
-  top -b -n 1 -c
-) 2>&1>> $logfile
-
-(
-  echo ""
-  echo "==========================================="
-  echo "           Process list"
-  echo "==========================================="
-  ps axuf
-) 2>&1>> $logfile
-
-(
-  echo ""
-  echo "==========================================="
-  echo "           Apache processes"
-  echo "==========================================="
-  service httpd fullstatus
-) 2>&1>> $logfile
-
-(
-  echo ""
-  echo "==========================================="
-  echo "           MySQL processes"
-  echo "==========================================="
-  mysqladmin processlist
-) 2>&1>> $logfile
-
-(
-  echo ""
-  echo "==========================================="
-  echo "Snapshot done and saved as "
-  echo $logfile
-  echo "==========================================="
-) 2>&1 |tee -a $logfile
-
-exit $?
