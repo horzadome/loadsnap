@@ -7,9 +7,9 @@
 # usage		: just run it, no arguments required
 #
 # version	: v.0.1 - 2012-09-19 Davor Grubisa : written the script
-#			: v.0.2 - 2012-09-20 Davor Grubisa : externalized configuration
-#				added templating support , added distro-specific configuration
-
+#		: v.0.2 - 2012-09-20 Davor Grubisa : externalized configuration
+#			added templating support , added distro-specific configuration
+#		:v.0.3 - 2102-09-21 Davor Grubisa : added module toggle
 # loadsnap.conf - modify paths and commands
 # template.conf - modify header templates
 
@@ -36,7 +36,29 @@ touch $logfile
 . $basedir/template.conf
 
 case $os in
-custom)
+    custom)
+      ;;
+    ubuntu)
+	. $moddir/os-debian.sh
+      ;;
+    debian)
+	  . $moddir/os-debian.sh
+      ;;
+    centos)
+	  . $moddir/os-centos.sh
+      ;;
+    redhat)
+	  . $moddir/os-centos.sh
+      ;;
+    cpanel)
+	  . $moddir/os-cpanel.sh
+      ;;
+    *)
+	  echo -e "Wrong OS choice. \nPlease check $basedir/loadsnap.conf and select one of the OS choices there"
+      exit 2
+      ;;
+esac
+
   freemem=$custommem
   bandwidth=$custombw
   dagstat=$customdstat
@@ -45,12 +67,6 @@ custom)
   sarcommand=$customsar
   topproc=$customtop
   proclist=$customproc
-  ;;
-*)
-  echo -e "Wrong OS choice. \nPlease check $basedir/loadsnap.conf and select one of the choices there"
-  exit 2
-  ;;
-esac
 
 # HEADER START
 $separator 2>&1>> $logfile
@@ -59,15 +75,16 @@ $separator 2>&1>> $logfile
 # HEADER END
 
 # MODULES START
-(. $moddir/memcpu.sh ) 2>&1>> $logfile
-(. $moddir/network.sh) 2>&1>> $logfile
-(. $moddir/disk.sh) 2>&1>> $logfile
-(. $moddir/process.sh) 2>&1>> $logfile
-(. $moddir/apache.sh) 2>&1>> $logfile
-(. $moddir/mysql.sh) 2>&1>> $logfile
+if [[ $mod_memcpu == 1 ]];then (. $moddir/memcpu.sh ) 2>&1>> $logfile ;fi
+if [[ $mod_network == 1 ]];then (. $moddir/network.sh) 2>&1>> $logfile ;fi
+if [[ $mod_disk == 1 ]];then (. $moddir/disk.sh) 2>&1>> $logfile ;fi
+if [[ $mod_process == 1 ]];then (. $moddir/process.sh) 2>&1>> $logfile ;fi
+if [[ $mod_apache == 1 ]];then (. $moddir/apache.sh) 2>&1>> $logfile ;fi
+if [[ $mod_mysql == 1 ]];then (. $moddir/mysql.sh) 2>&1>> $logfile ;fi
 # MODULES END
 
 # FOOTER START
+echo "" 2>&1>> $logfile
 $separator 2>&1>> $logfile
 $footer 2>&1 |tee -a $logfile
 $separator 2>&1>> $logfile

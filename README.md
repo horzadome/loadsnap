@@ -16,18 +16,23 @@ Requirements, but works without them too
 
 Usage
 -------------------------------------
-Just run loadstat.sh, no arguments required (or possible), and by default reports are saved to $basedir/reports/$timestamp
+- configure OS section in loadsnap.conf
+- loadstat.sh - by default reports are saved to $basedir/reports/$timestamp
 
 Tips
 -------------------------------------
 - `chmod 755 -where-you-placed-this-script-` and `ln -s -where-you-placed-this-script- /usr/bin/loadsnap`
-- modify loadsnap.conf to match your platform
+- command paths and network ports can be specified in loadsnap.conf
+- select modules that you want to use in loadsnap.conf
 - report headers can be modified in template.conf
 - feel free to modify modules in "modules" directory
+- make your own module and contribute the code !
 
 Licence
 -------------------------------------
-If you use it, feel free to buy me a beer when you see me. If you feel like it. If you don't, then don't :D
+If you use it, and feel like buying me a beer, feel free to do so. I like all beer :)
+If you don't, then don't :D
+If you would like me to make html or xml reports, or check why your server is slow, feel free to contact me at horzadome at gmail
 
 
 [GitHub repo](https://github.com/horzadome/loadsnap/)
