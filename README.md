@@ -18,9 +18,12 @@ Requirements, but works without them too
 Installation
 -------------------------------------
 - install git client - `yum install git` or `apt-get install git`
-- ```cd /opt
+```cd /opt
+
 git clone git://github.com/horzadome/loadsnap.git
+
 ln -s /opt/loadsnap/loadsnap.sh /usr/bin/loadsnap
+
 crontab -e ```
 append this line to crontab and save `*/5 * * * * /opt/loadsnap/monitor.sh`
 
