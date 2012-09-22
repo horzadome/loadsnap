@@ -14,16 +14,32 @@ Requirements, but works without them too
 - [bwm-ng](http://www.gropp.org/?id=projects&sub=bwm-ng)
 - [dstat](http://dag.wieers.com/home-made/dstat/)
 
+
+Installation
+-------------------------------------
+- install git client - `yum install git` or `apt-get install git`
+- ```cd /opt
+git clone git://github.com/horzadome/loadsnap.git
+ln -s /opt/loadsnap/loadsnap.sh /usr/bin/loadsnap
+crontab -e ```
+append this line to crontab and save `*/5 * * * * /opt/loadsnap/monitor.sh`
+
+
 Usage
 -------------------------------------
-- configure OS section in loadsnap.conf
-- loadstat.sh - by default reports are saved to $basedir/reports/$timestamp
+- configure OS section in /opt/loadsnap/loadsnap.conf , everything else can be left on default
+- run command `loadsnap` - by default reports are saved to /opt/loadsnap/reports/$timestamp
+
+Advanced configuration
+-------------------------------------
+- if you are using cPanel, select "cpanel" instead of the actual OS in loadsnap.conf
+- if you compiled things from source or have some OS that's not in the list, set OS to "custom" in loadsnap.conf
+- select modules that you want to use in loadsnap.conf
+- if your services are on non-default ports, modify ports in loadsnap.conf
+- you can change the cron job's overload treshold using "loadcritical" parameter. Please make sure to use integer value. Meaning a "whole number". Not decimal, and definitely not percentage. Or simply leave empty to have it automatically calculated to 90% of yout server's total CPU power.
 
 Tips
 -------------------------------------
-- `chmod 755 -where-you-placed-this-script-` and `ln -s -where-you-placed-this-script- /usr/bin/loadsnap`
-- command paths and network ports can be specified in loadsnap.conf
-- select modules that you want to use in loadsnap.conf
 - report headers can be modified in template.conf
 - feel free to modify modules in "modules" directory
 - make your own module and contribute the code !
