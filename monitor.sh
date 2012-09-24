@@ -28,7 +28,7 @@ basedir=$dir
     ;;
 esac
 
-loadavg=`uptime | awk '{print $10}'`
+loadavg=`uptime | awk '{print $12}'`
 snap=$(echo "$critload $loadavg" | awk '{ if ($1 < $2) print 1 }')
 if [[ $snap == 1 ]];then ($basedir/loadsnap.sh) ;fi
 
