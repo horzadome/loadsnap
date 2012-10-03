@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# title		: logsnap.sh
+# title		: loadsnap.sh
 # descritption	: A small script to make a server processes and resource snapshot so that it can be analyzed later.
 # author	: Davor Grubisa <horzadome@gmail.com>
 # url		: https://github.com/horzadome/loadsnap
