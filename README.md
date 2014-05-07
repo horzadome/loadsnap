@@ -28,3 +28,4 @@ If you use it, and feel like buying me a beer, feel free to do so. I like all be
 If you don't, then don't :D
 If you would like me to make html or xml reports, or check why your server is slow, feel free to contact me at horzadome at gmail
 Be warned, this is under development and is not expected to yield the expected results :)
+[![analytics](http://www.google-analytics.com/collect?v=1&t=pageview&_s=1&dl=https%3A%2F%2Fgithub.com%2Fproject-imas%2Fapp-password&_u=MAC~&cid=1757014354.1393964045&tid=UA-29844456-3)]()
